@@ -54,7 +54,7 @@ public class Generator extends JFrame {
 	
 	private int count = 1;
 	
-	private Set<String> passwords = new HashSet<>();
+	private List<String> passwords = new ArrayList<>();
 	
 	private List<Character> list = new ArrayList<>();
 	
@@ -290,8 +290,15 @@ public class Generator extends JFrame {
 			}else if(button == copy) {
 				copyKey(textField.getText());
 			}else if(button == saves) {
-				Saves s = new Saves();
-				s.setVisible(true);
+				Saves s;
+				try {
+					s = new Saves();
+					s.setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				dispose();
 			}
 		}

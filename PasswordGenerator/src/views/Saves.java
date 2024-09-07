@@ -5,15 +5,26 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
+import model.Password;
+import java.awt.Dimension;
 
 public class Saves extends JFrame {
 
@@ -21,6 +32,9 @@ public class Saves extends JFrame {
 	private JPanel contentPane;
 	
 	private JButton back;
+	private JTable table;
+	
+	private List<Password> passwords;
 
 	/**
 	 * Launch the application.
@@ -40,8 +54,9 @@ public class Saves extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
 	 */
-	public Saves() {
+	public Saves() throws IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 420, 602);
 		setLocationRelativeTo(null);
@@ -70,6 +85,27 @@ public class Saves extends JFrame {
 		panelTable.setBackground(new Color(56, 56, 56));
 		panelTable.setBounds(26, 30, 285, 326);
 		panel.add(panelTable);
+		panelTable.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setForeground(new Color(255, 255, 255));
+		scrollPane.setFont(new Font("Inter 28pt Black", Font.PLAIN, 14));
+		scrollPane.setBackground(new Color(56, 56, 56));
+		scrollPane.setBorder(new LineBorder(new Color(0, 255, 117), 3, true));
+		scrollPane.setBounds(10, 10, 265, 306);
+		panelTable.add(scrollPane);
+		
+		table = new JTable();
+		table.setRowSelectionAllowed(false);
+		table.setFillsViewportHeight(true);
+		table.setRowHeight(40);
+		table.setGridColor(new Color(0, 255, 117));
+		table.setForeground(new Color(255, 255, 255));
+		table.setFont(new Font("Inter 28pt Black", Font.PLAIN, 14));
+		table.setBackground(new Color(56, 56, 56));
+		table.setBorder(new LineBorder(new Color(0, 255, 117), 2));
+		showPasswords();
+		scrollPane.setViewportView(table);
 		
 		back = new JButton("");
 		back.setBackground(new Color(0, 255, 117));
@@ -98,5 +134,27 @@ public class Saves extends JFrame {
 		}
 		
 	}
-
+	
+	//METODOS EXTERNOS
+	
+	public void showPasswords() throws IOException {
+		passwords = new ArrayList<>();
+		
+		BufferedReader bf = new BufferedReader(new FileReader("keys/passwords.txt"));
+		String line = "";
+		while(line != null) {
+			line = bf.readLine();
+			passwords.add(new Password(line));
+		}
+		
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {"Contraseñas"}));
+		DefaultTableModel dtm = (DefaultTableModel)table.getModel();
+		dtm.setRowCount(0);
+		
+		for(int i = 0; i < this.passwords.size(); i++) {
+			dtm.addRow(new Object[] {
+					passwords.get(i).getKey()
+			});
+		}
+	}
 }
