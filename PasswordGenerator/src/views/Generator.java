@@ -247,6 +247,7 @@ public class Generator extends JFrame {
 		decrease.addActionListener(new buttons());
 		generate.addActionListener(new buttons());
 		copy.addActionListener(new buttons());
+		saves.addActionListener(new buttons());
 		
 	}
 	
@@ -276,6 +277,10 @@ public class Generator extends JFrame {
 				generatePassword(upperBox, lowerBox, numberBox, symbolBox);
 			}else if(button == copy) {
 				copyKey(textField.getText());
+			}else if(button == saves) {
+				Saves s = new Saves();
+				s.setVisible(true);
+				dispose();
 			}
 		}
 		
