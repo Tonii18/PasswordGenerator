@@ -22,9 +22,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import model.Password;
-import java.awt.Dimension;
 
 public class Saves extends JFrame {
 
@@ -96,14 +96,18 @@ public class Saves extends JFrame {
 		panelTable.add(scrollPane);
 		
 		table = new JTable();
+		JTableHeader header = table.getTableHeader();
+		header.setBackground(new Color(56, 56, 56));
+		header.setFont(new Font("Inter 28pt Black", Font.PLAIN, 26));
+		header.setForeground(Color.WHITE);
 		table.setRowSelectionAllowed(false);
 		table.setFillsViewportHeight(true);
-		table.setRowHeight(40);
+		table.setRowHeight(50);
 		table.setGridColor(new Color(0, 255, 117));
 		table.setForeground(new Color(255, 255, 255));
-		table.setFont(new Font("Inter 28pt Black", Font.PLAIN, 14));
+		table.setFont(new Font("Inter 28pt Black", Font.PLAIN, 18));
 		table.setBackground(new Color(56, 56, 56));
-		table.setBorder(new LineBorder(new Color(0, 255, 117), 2));
+		table.setBorder(null);
 		showPasswords();
 		scrollPane.setViewportView(table);
 		
