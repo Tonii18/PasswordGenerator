@@ -3,6 +3,9 @@ package views;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -243,6 +246,7 @@ public class Generator extends JFrame {
 		increase.addActionListener(new buttons());
 		decrease.addActionListener(new buttons());
 		generate.addActionListener(new buttons());
+		copy.addActionListener(new buttons());
 		
 	}
 	
@@ -270,12 +274,23 @@ public class Generator extends JFrame {
 				}
 			}else if(button == generate) {
 				generatePassword(upperBox, lowerBox, numberBox, symbolBox);
+			}else if(button == copy) {
+				copyKey(textField.getText());
 			}
 		}
 		
 	}
 	
 	//METODOS EXTERNOS
+	
+	public void copyKey(String key) {
+		String password = key;
+		StringSelection stringSelection = new StringSelection(password);
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(stringSelection, null);
+		
+		JOptionPane.showMessageDialog(null, "Contraseña copiada correctamente");
+	}
 	
 	public void generatePassword(JCheckBox upper, JCheckBox lower, JCheckBox number, JCheckBox symbol) {
 		String key = "";
