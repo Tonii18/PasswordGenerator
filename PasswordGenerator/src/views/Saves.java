@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import model.Password;
+import javax.swing.border.EtchedBorder;
 
 public class Saves extends JFrame {
 
@@ -88,6 +89,7 @@ public class Saves extends JFrame {
 		panelTable.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportBorder(null);
 		scrollPane.setForeground(new Color(255, 255, 255));
 		scrollPane.setFont(new Font("Inter 28pt Black", Font.PLAIN, 14));
 		scrollPane.setBackground(new Color(56, 56, 56));
