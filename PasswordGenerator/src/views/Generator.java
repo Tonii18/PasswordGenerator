@@ -8,6 +8,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +28,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import model.Password;
 
 public class Generator extends JFrame {
 
@@ -53,6 +57,8 @@ public class Generator extends JFrame {
 	private Set<String> passwords = new HashSet<>();
 	
 	private List<Character> list = new ArrayList<>();
+	
+	private String fichero = "keys/passwords.txt";
 
 	/**
 	 * Launch the application.
@@ -275,6 +281,12 @@ public class Generator extends JFrame {
 				}
 			}else if(button == generate) {
 				generatePassword(upperBox, lowerBox, numberBox, symbolBox);
+				try {
+					escribirFichero();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}else if(button == copy) {
 				copyKey(textField.getText());
 			}else if(button == saves) {
@@ -287,6 +299,16 @@ public class Generator extends JFrame {
 	}
 	
 	//METODOS EXTERNOS
+	
+	public void escribirFichero() throws IOException {
+		String password = textField.getText();
+		
+		Password p = new Password(password);
+		
+		FileWriter fw = new FileWriter(fichero, true);
+		fw.write(p+"\n");
+		fw.close();
+	}
 	
 	public void copyKey(String key) {
 		String password = key;
@@ -340,7 +362,7 @@ public class Generator extends JFrame {
 			}
 			
 		}
-		
+		passwords.add(key);
 		textField.setText(key);
 	}
 	
