@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,11 +18,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.JSeparator;
 
 public class Generator extends JFrame {
 
@@ -30,7 +35,6 @@ public class Generator extends JFrame {
 	private JLabel lowerLbl;
 	private JLabel numbersLbl;
 	private JLabel symbolLbl;
-	private JCheckBox upper;
 	private JCheckBox upperBox;
 	private JCheckBox lowerBox;
 	private JCheckBox numberBox;
@@ -42,6 +46,10 @@ public class Generator extends JFrame {
 	private JButton saves;
 	
 	private int count = 1;
+	
+	private Set<String> passwords = new HashSet<>();
+	
+	private List<Character> list = new ArrayList<>();
 
 	/**
 	 * Launch the application.
@@ -111,6 +119,7 @@ public class Generator extends JFrame {
 		panel.add(decrease);
 		
 		size = new JTextField();
+		size.setFont(new Font("Inter 28pt", Font.PLAIN, 16));
 		size.setBorder(null);
 		size.setHorizontalAlignment(SwingConstants.CENTER);
 		size.setBounds(139, 55, 61, 30);
@@ -229,9 +238,12 @@ public class Generator extends JFrame {
 		
 		//ACTIONS LISTENERS
 		
+		fillList();
+		
 		increase.addActionListener(new buttons());
 		decrease.addActionListener(new buttons());
-
+		generate.addActionListener(new buttons());
+		
 	}
 	
 	//CLASE PRIVADA CON LAS FUNCIONALIDADES DE LOS BOTONES
@@ -256,6 +268,8 @@ public class Generator extends JFrame {
 					count--;
 					size.setText(String.valueOf(count));
 				}
+			}else if(button == generate) {
+				generatePassword(upperBox, lowerBox, numberBox, symbolBox);
 			}
 		}
 		
@@ -263,5 +277,58 @@ public class Generator extends JFrame {
 	
 	//METODOS EXTERNOS
 	
+	public void generatePassword(JCheckBox upper, JCheckBox lower, JCheckBox number, JCheckBox symbol) {
+		String key = "";
+		
+		List<Character> avaliablesChar = new ArrayList<>();
+		
+		if(!upper.isSelected() && !lower.isSelected() && !number.isSelected() && !symbol.isSelected()) {
+			JOptionPane.showMessageDialog(null, "Debes seleccionar al menos una opcion");
+		}else {
+			if(upper.isSelected()) {
+				for(Character c: list) {
+					if(Character.isLetter(c) && Character.isUpperCase(c)) {
+						avaliablesChar.add(c);
+					}
+				}
+			}
+			if(lower.isSelected()) {
+				for(Character c: list) {
+					if(Character.isLetter(c) && Character.isLowerCase(c)) {
+						avaliablesChar.add(c);
+					}
+				}
+			}
+			if(number.isSelected()) {
+				for(Character c: list) {
+					if(Character.isDigit(c)) {
+						avaliablesChar.add(c);
+					}
+				}
+			}
+			if(symbol.isSelected()) {
+				for(Character c: list) {
+					if(!Character.isLetterOrDigit(c)) {
+						avaliablesChar.add(c);
+					}
+				}
+			}
+			
+			for(int i = 1; i <= Integer.valueOf(size.getText()); i++) {
+				int n = new Random().nextInt(avaliablesChar.size());
+				key += avaliablesChar.get(n);
+			}
+			
+		}
+		
+		textField.setText(key);
+	}
+	
+	public void fillList() {
+		for(int i = 32; i <= 126; i++) {
+			list.add((char)i);
+		}
+	}
+		
 	
 }
