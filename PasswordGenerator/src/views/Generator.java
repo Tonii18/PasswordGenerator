@@ -80,6 +80,10 @@ public class Generator extends JFrame {
 	 * Create the frame.
 	 */
 	public Generator() {
+		setTitle("Generador de contraseñas");
+		ImageIcon icon = new ImageIcon(getClass().getResource("/icon.png"));
+		setIconImage(icon.getImage());
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 420, 602);
 		setLocationRelativeTo(null);
