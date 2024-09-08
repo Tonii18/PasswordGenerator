@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import model.Password;
-import javax.swing.border.EtchedBorder;
 
 public class Saves extends JFrame {
 
@@ -36,6 +36,8 @@ public class Saves extends JFrame {
 	private JTable table;
 	
 	private List<Password> passwords;
+	
+	private String fichero = "C:\\Users\\ajsan\\git\\PasswordGenerator\\PasswordGenerator\\keys\\passwords.txt";
 
 	/**
 	 * Launch the application.
@@ -58,6 +60,10 @@ public class Saves extends JFrame {
 	 * @throws IOException 
 	 */
 	public Saves() throws IOException {
+		setTitle("Generador de contraseñas");
+		ImageIcon image = new ImageIcon(getClass().getResource("/icon.png"));
+		setIconImage(image.getImage());
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 420, 602);
 		setLocationRelativeTo(null);
@@ -146,12 +152,14 @@ public class Saves extends JFrame {
 	public void showPasswords() throws IOException {
 		passwords = new ArrayList<>();
 		
-		BufferedReader bf = new BufferedReader(new FileReader("keys/passwords.txt"));
+		BufferedReader bf = new BufferedReader(new FileReader(fichero));
 		String line = "";
 		while(line != null) {
 			line = bf.readLine();
 			passwords.add(new Password(line));
 		}
+		
+		bf.close();
 		
 		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {"Contraseñas"}));
 		DefaultTableModel dtm = (DefaultTableModel)table.getModel();

@@ -58,7 +58,7 @@ public class Generator extends JFrame {
 	
 	private List<Character> list = new ArrayList<>();
 	
-	private String fichero = "keys/passwords.txt";
+	private String fichero = "C:\\Users\\ajsan\\git\\PasswordGenerator\\PasswordGenerator\\keys\\passwords.txt";
 
 	/**
 	 * Launch the application.
