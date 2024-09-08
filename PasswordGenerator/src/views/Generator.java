@@ -294,16 +294,14 @@ public class Generator extends JFrame {
 			}else if(button == copy) {
 				copyKey(textField.getText());
 			}else if(button == saves) {
-				Saves s;
 				try {
-					s = new Saves();
+					Saves s = new Saves();
 					s.setVisible(true);
+					dispose();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				dispose();
 			}
 		}
 		
