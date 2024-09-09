@@ -108,6 +108,7 @@ public class Saves extends JFrame {
 		header.setBackground(new Color(56, 56, 56));
 		header.setFont(new Font("Inter 28pt Black", Font.PLAIN, 26));
 		header.setForeground(Color.WHITE);
+		header.setBorder(new LineBorder(new Color(0, 255, 117), 1, true));
 		table.setRowSelectionAllowed(false);
 		table.setFillsViewportHeight(true);
 		table.setRowHeight(50);
